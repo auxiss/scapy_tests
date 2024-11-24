@@ -1,4 +1,5 @@
 from scapy.all import *
+import packetParcer
 import logger
 import time
 
@@ -8,25 +9,30 @@ class lisener:
         self.running = True
 
         self.iface = iface
-        self.PktBuffer = []
+
 
         def sniffer(self):
 
             def packetHandler(pkt):
-                print(pkt.show)
+                packetParcer.show(pkt)
+                print(packetParcer.getLayers(pkt))
 
             print("starting sniffer")
             logger.log("starting sniffer")
+
             while self.running:
-                sniff(iface = self.iface,prn = packetHandler, count=16)
+                sniff(iface = self.iface, prn = packetHandler, count=16)
+
             print("sniffer stoped!")
             logger.log("sniffer stoped!")
 
         
         print("starting sniffer threand")
         logger.log("starting sniffer threand")
+
         tlisener = Thread(target=sniffer, args=(self,))
         tlisener.start()
+        
         print("sniffer thread statied!")
         logger.log("sniffer thread statied!")
     
