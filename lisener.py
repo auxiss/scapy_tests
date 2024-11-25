@@ -14,8 +14,15 @@ class lisener:
         def sniffer(self):
 
             def packetHandler(pkt):
-                packetParcer.show(pkt)
-                print(packetParcer.getLayers(pkt))
+                #packetParcer.show(pkt)
+                #print(packetParcer.getLayers(pkt))
+                packetParcer.filter(pkt,"a4:a4:90:53:91:a4")
+                print('.')
+
+                #packetParcer.decapsulate(pkt)
+
+
+
 
             print("starting sniffer")
             logger.log("starting sniffer")
@@ -32,7 +39,7 @@ class lisener:
 
         tlisener = Thread(target=sniffer, args=(self,))
         tlisener.start()
-        
+
         print("sniffer thread statied!")
         logger.log("sniffer thread statied!")
     
@@ -44,7 +51,7 @@ class lisener:
 
 if __name__ == "__main__":
     import time
-    iface = "enp0s31f6"
+    iface = "wlx00c0cab26f0a"
     rx = lisener(iface)
-    time.sleep(5)
+    input()
     rx.stop()
