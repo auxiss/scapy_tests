@@ -93,9 +93,11 @@ if __name__ == "__main__":
         if pkt != None:
             try:
                 
-                pkt = pktModifyer.getDnsQues(pkt)
-                pktManipulator.show(pkt)
-                pktSender.getResponse(pkt)
+                #pkt = pktModifyer.getDnsQues(pkt)
+                #pktManipulator.show(pkt)
+                response = pktSender.getResponse(pkt)
+                #pktManipulator.show(response)
+                pktSender.sendResponse(response,pkt)
 
             except:
                 pass
