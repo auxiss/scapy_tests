@@ -3,11 +3,11 @@ import logger
 
 
 def show(pkt):
-    #print("\nnew packet rcved----->")
-    #print("summery:")
-    #print(pkt.summary())
-    #print("all:")
-    #print(pkt.show())
+    print("\nnew packet rcved----->")
+    print("summery:")
+    print(pkt.summary())
+    print("all:")
+    print(pkt.show())
     #print("payload:")
     #print(pkt.payload)
     #print("outer most layer:")
@@ -29,8 +29,9 @@ def getLayers(pkt):
 
 def filter(pkt,keyword):
     if keyword in str(pkt.summary):
-        show(pkt)
         return pkt
+    else:
+        return None
     
 
 def decapsulate(pkt):

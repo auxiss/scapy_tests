@@ -2,6 +2,7 @@ from scapy.all import *
 import packetParcer
 import logger
 import time
+import pktsender
 
 class lisener:
 
@@ -16,20 +17,22 @@ class lisener:
 
             def packetHandler(pkt):
 
-                while len(self.pktBuffer) >= 1024:
+                while len(self.pktBuffer) >= 1024: #whait for buffer to be procesed
                     print("Buffer max reached!")
                     print(len(self.pktBuffer))
-                    time.sleep(0.01)
+                    time.sleep(0.1)
 
-                self.pktBuffer.append(pkt)
-                logger.log("buffer size: "+str(len(self.pktBuffer)))
 
-                packetParcer.show(pkt)
-                #print(packetParcer.getLayers(pkt))
-                #packetParcer.filter(pkt,"a4:a4:90:53:91:a4")
-                #print('.')
+                modPkt = packetParcer.filter(pkt,"DNS") #keep the dns packets only
 
-                #packetParcer.decapsulate(pkt)
+
+                if modPkt != None:
+                    self.pktBuffer.append(modPkt)
+
+
+                
+                #logger.log("buffer size: "+str(len(self.pktBuffer)))
+
 
 
 
@@ -69,27 +72,31 @@ class lisener:
                 #logger.log("buffer size: "+str(len(self.pktBuffer)))
                 #logger.log("read element form buffer")
                 rcvedPkt = self.pktBuffer.pop(0)
-                print("rcvedPkt: "+str(type(rcvedPkt)))
                 #logger.log("buffer read")
                 return rcvedPkt
             except:
                 logger.log("failed reading buffer!")
-                return 1
+                return None
 
         
 
 
 if __name__ == "__main__":
     import time
-    iface = "enp0s31f6"
+    iface = "wlx00c0cab26f0a"
     rx = lisener(iface)
 
     while True:
 
-        if rx.BufferRead():
-            pkt = rx.BufferRead()
-            print("pkt: "+str(type(pkt)))
-            print(pkt)
-        
+        pkt = rx.BufferRead()
+        if pkt != None:
+            try:
+                
+                pktsender.getDnsQUERY(pkt)
+
+            except:
+                pass
+
+    
     input()
     rx.stop()
