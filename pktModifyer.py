@@ -4,10 +4,10 @@ import logger
 gatewayIP = "192.168.1.1"
 iface = "enp0s31f6"
 
-def getDnsQUERY(DNS_Question):
+def getDnsQues(DNS_Question):
     print("-----------------------")
 
-    print("DNS Question:")
+    print("Original DNS Question:")
     print(DNS_Question.show())
     print(DNS_Question.summary())
 
@@ -82,14 +82,14 @@ def getDnsQUERY(DNS_Question):
             print("Query Name:", QueryName)
             print("Query Type:", dns_layer.qd.qtype)
 
-
-
-
     DNS_Question = Ether(type="IPv4") / DNS_Question
+
+    print("Modifayed DNS Question:")
     print(DNS_Question.show())
-    DNS_Response = sr1(DNS_Question, verbose=0, iface=iface,timeout=5)
-    print("Response: "+str(DNS_Response))
-    #print(DNS_Response.show())
+    DNS_Question = DNS_Question.payload
+    return DNS_Question
+    
+
 
 
 

@@ -1,8 +1,9 @@
 from scapy.all import *
-import packetParcer
+import pktManipulator
 import logger
 import time
-import pktsender
+import pktModifyer
+import pktSender
 
 class lisener:
 
@@ -23,7 +24,7 @@ class lisener:
                     time.sleep(0.1)
 
 
-                modPkt = packetParcer.filter(pkt,"DNS") #keep the dns packets only
+                modPkt = pktManipulator.filter(pkt,"DNS") #keep the dns packets only
 
 
                 if modPkt != None:
@@ -92,7 +93,9 @@ if __name__ == "__main__":
         if pkt != None:
             try:
                 
-                pktsender.getDnsQUERY(pkt)
+                pkt = pktModifyer.getDnsQues(pkt)
+                pktManipulator.show(pkt)
+                pktSender.getResponse(pkt)
 
             except:
                 pass
