@@ -100,7 +100,6 @@ if __name__ == "__main__":
 
                 print("\nmodifyed client request pkt:" )
                 dns_request =pktModifyer.flipSender(pkt)
-                print(type(dns_request))
                 pktManipulator.show(dns_request)
 
                 print("\nserver response pkt:")
@@ -108,7 +107,12 @@ if __name__ == "__main__":
                 print(type(response))
                 pktManipulator.show(response)
 
-                pktSender.sendResponse(response,pkt)
+                print("\nmodifyed_Response pkt:")
+                modifyed_DNS_Response = pktModifyer.flipReciver(response,pkt)
+                pktManipulator.show(modifyed_DNS_Response)
+
+
+                pktSender.sendResponse(modifyed_DNS_Response)
 
             except:
                 pass
