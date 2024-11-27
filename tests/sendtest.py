@@ -1,4 +1,5 @@
 from scapy.all import *
+import logger
 
 iface = "enp0s31f6"
 
@@ -7,6 +8,7 @@ target_domain = "www.google.com"
 dns_server = "8.8.8.8"  # Google's public DNS server
 
 # Build the DNS query packet
+
 dns_query = IP(dst=dns_server)/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname=target_domain))
 
 # Send the DNS query and get the response

@@ -2,7 +2,7 @@ from scapy.all import *
 import pktManipulator
 import logger
 import time
-import pktModifyer
+import pktModifyer as pktModifyer
 import pktSender
 
 class lisener:
@@ -93,10 +93,21 @@ if __name__ == "__main__":
         if pkt != None:
             try:
                 
-                #pkt = pktModifyer.getDnsQues(pkt)
-                #pktManipulator.show(pkt)
-                response = pktSender.getResponse(pkt)
-                #pktManipulator.show(response)
+                print("-------new packet--------->>>>\n\n")
+
+                print("client request pkt:")
+                pktManipulator.show(pkt)
+
+                print("\nmodifyed client request pkt:" )
+                dns_request =pktModifyer.flipSender(pkt)
+                print(type(dns_request))
+                pktManipulator.show(dns_request)
+
+                print("\nserver response pkt:")
+                response = pktSender.getResponse(dns_request)
+                print(type(response))
+                pktManipulator.show(response)
+
                 pktSender.sendResponse(response,pkt)
 
             except:

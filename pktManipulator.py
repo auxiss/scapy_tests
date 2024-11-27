@@ -3,11 +3,11 @@ import logger
 
 
 def show(pkt):
-    print("\nnew packet rcved----->")
+    print("packet info:")
     print("summery:")
     print(pkt.summary())
-    print("all:")
-    print(pkt.show())
+    #print("all:")
+    #print(pkt.show())
     #print("payload:")
     #print(pkt.payload)
     #print("outer most layer:")
