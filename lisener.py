@@ -111,8 +111,9 @@ if __name__ == "__main__":
                 modifyed_DNS_Response = pktModifyer.flipReciver(response,pkt)
                 pktManipulator.show(modifyed_DNS_Response)
 
-
+                print("sending pkt back")
                 pktSender.sendResponse(modifyed_DNS_Response)
+                print("pkt sended")
 
             except:
                 pass

@@ -12,11 +12,12 @@ def getResponse(dns_request):
     return DNS_Response
 
 
-def sendResponse(DNS_Response,pkt):
+def sendResponse(DNS_Response):
     iface="wlx00c0cab26f0a"
 
-    
-    sendp(final_DNS_Response, iface=iface)
+    print(type(DNS_Response))
+    print(DNS_Response.summary())
+    sendp(DNS_Response, iface=iface)
     
     
 

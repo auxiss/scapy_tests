@@ -45,10 +45,24 @@ def flipReciver(DNS_Response, pkt):
         #print(DNS_Response.summary())
         macSrc = pkt[Ether].src
         ipSrc = pkt[IP].src
+        sport = pkt[UDP].sport
+
+        checksum = DNS_Response[UDP].chksum
         #print(macSrc)
         #print(ipSrc)
+        print("sorce port: ", end='')
+        print(sport)
+        #print("checksum: ", end='')
+        #print(checksum)
+        
 
-        modifyed_DNS_Response = Ether(dst=macSrc) / IP(dst=ipSrc) /DNS_Response.payload
+
+
+        DNS_pkt_core = DNS_Response.payload
+
+        print("Dns core: "+ DNS_pkt_core.payload.summary())
+
+        modifyed_DNS_Response = Ether(dst=macSrc) / IP(dst=ipSrc) / UDP(dport=sport) / DNS_pkt_core.payload
         
         #print("modifaed response:")
         #print(final_DNS_Response.show())
