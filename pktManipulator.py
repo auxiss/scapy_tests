@@ -28,7 +28,7 @@ def getLayers(pkt):
 
 
 def filter(pkt,keyword):
-    if keyword in str(pkt.summary):
+    if str(keyword) in str(pkt.show):
         return pkt
     else:
         return None

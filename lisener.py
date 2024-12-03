@@ -17,6 +17,7 @@ class lisener:
         def sniffer(self):
 
             def packetHandler(pkt):
+                modPkt = None
 
                 while len(self.pktBuffer) >= 1024: #whait for buffer to be procesed
                     print("Buffer max reached!")
@@ -24,7 +25,11 @@ class lisener:
                     time.sleep(0.1)
 
 
-                modPkt = pktManipulator.filter(pkt,"DNS") #keep the dns packets only
+                mac_address = get_if_hwaddr(self.iface)
+
+                if "Ether" in pkt.summary():
+                    if mac_address == pkt[Ether].dst:
+                        modPkt = pktManipulator.filter(pkt,"DNS") #keep the dns packets only
 
 
                 if modPkt != None:
